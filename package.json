@@ -1,0 +1,43 @@
+{
+  "name": "ckb-wallet-extensions",
+  "displayName": "ckb-wallet-extensions",
+  "version": "0.0.1",
+  "description": "chrome extension.",
+  "author": "zouxionglin",
+  "scripts": {
+    "dev": "plasmo dev",
+    "build": "plasmo build"
+  },
+  "dependencies": {
+    "antd": "4.22.7",
+    "plasmo": "workspace:*",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "6.3.0"
+  },
+  "devDependencies": {
+    "@plasmohq/prettier-plugin-sort-imports": "workspace:*",
+    "@plasmohq/storage": "0.9.0",
+    "hox": "^1.1.2",
+    "@types/chrome": "0.0.195",
+    "@types/node": "18.7.8",
+    "@types/react": "18.0.17",
+    "@types/react-dom": "18.0.6",
+    "prettier": "2.7.1",
+    "typescript": "4.7.4",
+    "@ckb-lumos/lumos": "^0.18.0-rc6",
+    "cross-fetch": "^3.1.5"
+  },
+  "manifest": {
+    "permissions": [
+      "storage",
+      "declarativeContent",
+      "notifications",
+      "browserAction",
+      "scripting"
+    ],
+    "host_permissions": [
+      "https://*/*"
+    ]
+  }
+}
