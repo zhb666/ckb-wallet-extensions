@@ -5,6 +5,8 @@ import { userStore } from "../../stores";
 import { getPeers } from "../../rpc"
 import "./inedx.scss"
 
+import logo from "data-base64:~assets/img/logo.png"
+
 export const Home = () => {
   const userStoreHox = userStore();
   const navigation: NavigateFunction = useNavigate()
@@ -15,32 +17,21 @@ export const Home = () => {
     navigation("/about")
   }
 
-  const get_peers = async () => {
-
-    chrome.notifications.create(null, {
-      type: "basic",
-      iconUrl: "icon16.bee5274e.png",
-      title: "喝水小助手",
-      message: "看到此消息的人可以和我一起来喝一杯水"
-    })
-
-    return
-
-    const res = await getPeers();
-
-    console.log(res);
-    setId(res[0].node_id)
-  }
-
   return (
     <div className='Home'>
-      <span>create </span>
-      <input type="text" />
-      <Button type="primary" onClick={userStoreHox.setMyBalanceFun}>add</Button>
-      <p>userStoreHox:{userStoreHox.myBalance}</p>
-      <button onClick={onNextPage}>About</button>
-      <button onClick={get_peers}>getRpc </button>
-      <p>{id}</p>
+      <h3>欢迎来到ckb钱包</h3>
+      <img src={logo} alt="" />
+      <div className="createCkb">
+        <div className='create'>
+          创建钱包
+        </div>
+        <div className='import'>
+          导入私钥或助记词
+        </div>
+      </div>
+      <div>
+        © Nervos
+      </div>
     </div>
   )
 }

@@ -20,7 +20,7 @@ function useCounter() {
 
     useEffect(() => {
         chrome.storage.sync.get("a", function (data) {
-            setMyBalance(data.a);
+            setMyBalance(data.a || 0);
         })
     }, [])
 

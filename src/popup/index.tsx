@@ -7,7 +7,6 @@ import "./inedx.scss"
 function IndexPopup() {
   return (
     <div className="App">
-      app
       <MemoryRouter>
         <Routing />
       </MemoryRouter>

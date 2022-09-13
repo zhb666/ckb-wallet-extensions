@@ -1,8 +1,8 @@
-declare const window: any
+declare const window: any;
 const windowChanger = (): void => {
   const anotherFunc = (): number => {
-    return 42
-  }
+    return 42;
+  };
 
   // Here's an example where we can reference the window object
   // and add a new property to it
@@ -13,11 +13,13 @@ const windowChanger = (): void => {
     // you can call other functions from the injected script
     // but they must be declared inside the injected function
     // or be present in the global scope
-  }
+  };
 
   // Here's an example where we show you can reference the DOM
   // This console.log will show within the tab you injected into
-  console.log(document.getElementsByTagName("html"))
-}
+  console.log("tab change");
 
-export default windowChanger
+  console.log(document.getElementsByTagName("html"));
+};
+
+export default windowChanger;
