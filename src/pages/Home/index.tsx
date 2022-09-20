@@ -11,11 +11,21 @@ export const Home = () => {
   const userStoreHox = userStore();
   const navigation: NavigateFunction = useNavigate()
 
-  const [id, setId] = useState(0)
+  const [isLogin, setIsLogin] = useState(false)
 
-  const onNextPage = (): void => {
-    navigation("/about")
-  }
+
+  // isLogin
+  useEffect(() => {
+    chrome.storage.sync.get("walletList", function (data) {
+      const storageWalletList = data.walletList || [];
+      if (storageWalletList.length) {
+        setIsLogin(true)
+      } else {
+        setIsLogin(false)
+      }
+    })
+  }, [])
+
 
   return (
     <div className='Home'>
