@@ -22,11 +22,15 @@ export const Home = () => {
       <h3>欢迎来到ckb钱包</h3>
       <img src={logo} alt="" />
       <div className="createCkb">
-        <div className='create'>
-          创建钱包
+        <div className='create' onClick={() => {
+          navigation("/create")
+        }}>
+          新建钱包
         </div>
-        <div className='import'>
-          导入私钥或助记词
+        <div className='home_import' onClick={() => {
+          navigation("/import")
+        }}>
+          导入助记词
         </div>
       </div>
       <div>
