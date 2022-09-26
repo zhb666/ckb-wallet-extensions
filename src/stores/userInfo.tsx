@@ -12,7 +12,6 @@ interface DaoData {
 }
 
 function useCounter() {
-
     const [walletList, setWalletList] = useState<WalletListObject[]>([]);
     const [script, setScript] = useState<WalletListObject>();
     const [myBalance, setMyBalance] = useState<string>('');
@@ -22,8 +21,6 @@ function useCounter() {
     });
 
     const userScript = (script: WalletListObject) => {
-        console.log(script);
-
         setScript(script);
         chrome.storage.sync.set(
             {
@@ -35,8 +32,6 @@ function useCounter() {
         );
     }
     const addWalletList = (walletList: WalletListObject) => {
-        console.log(walletList);
-
         chrome.storage.sync.get("walletList", function (data) {
             const storageWalletList = data.walletList || [];
             storageWalletList.push(walletList)
@@ -73,25 +68,16 @@ function useCounter() {
 
     useEffect(() => {
         chrome.storage.sync.get("walletList", function (data) {
-            console.log(data.walletList);
-
             const storageWalletList = data.walletList || []
             setWalletList(storageWalletList)
-
             chrome.storage.sync.get("myScript", function (data) {
-
-                console.log(data.myScript);
-
-
                 // myWallet
                 let myScript = data.myScript || {}
-
                 if (storageWalletList.length === 0) {
                     myScript = {}
                 } else {
                     if (!myScript) {
                         myScript = storageWalletList[0]
-
                     }
                 }
                 setScript(myScript)

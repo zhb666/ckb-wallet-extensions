@@ -20,6 +20,7 @@ export const Home = () => {
       const storageWalletList = data.walletList || [];
       if (storageWalletList.length) {
         setIsLogin(true)
+        navigation("/main")
       } else {
         setIsLogin(false)
       }
