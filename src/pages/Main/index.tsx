@@ -18,8 +18,13 @@ export const Main = () => {
 
   return (
     <div className='Main'>
-      <h3>Main页面</h3>
-
+      <div className="header">地址</div>
+      <div className='main_box'>余额</div>
+      <div className='buttons'>
+        <Button>发送</Button>
+        <Button>Dao</Button>
+      </div>
+      <div className='transaction'>交易记录</div>
     </div>
   )
 }
