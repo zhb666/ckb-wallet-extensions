@@ -1,56 +1,88 @@
 import React, { useEffect, useState } from "react";
-import { Button, Dropdown, Menu, MenuProps, Space } from "antd"
+import { Button, Dropdown, Menu, MenuProps, Space, Select } from "antd"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { userStore } from "../../stores";
 import "./inedx.scss"
+import type { ScriptList, WalletListObject } from '~type';
+import { cutValue } from '~utils';
+import { getScripts, getTipHeader, setScripts } from '~rpc';
+
+const { Option } = Select;
 
 
 export const Main = () => {
   const userStoreHox = userStore();
+  const { walletList } = userStoreHox
   const navigation: NavigateFunction = useNavigate()
 
-  const onChangeAddress: MenuProps['onClick'] = ({ key }) => {
-    console.log(key);
+  const [script, setScript] = useState<WalletListObject>();
+  const [wallet, setWallet] = useState<any>();
+
+
+  const handleChange = (value: string) => {
+    setWallet(value)
   };
 
-  const addressList = (
-    <Menu
-      onClick={onChangeAddress}
-      items={[
-        {
-          key: '1',
-          label: (
-            <div >
-              1st menu item
-            </div>
-          ),
-        },
-        {
-          key: '2',
-          label: (
-            <div >
-              2nd menu item
-            </div>
-          ),
-        },
-        {
-          key: '3',
-          label: (
-            <div >
-              3rd menu item
-            </div>
-          ),
-        },
-      ]}
-    />
-  );
+  const changeWallet = async () => {
+    if (!walletList) return
+    // Determine the currently selected wallet
+    let res: WalletListObject[] = walletList.filter(item =>
+      item.privateKeyAgs.address == wallet
+    )
+    userStoreHox.userScript(res[0])
+    setScript(res[0])
+    // First get the previous synchronization height, if it does not start from zero, take it out and pass the value
+    // const getScript = await getScripts();
+    // const getScriptRes = getScript.filter((item: { script: { args: any; }; }) =>
+    //   item.script.args == wallet
+    // )
 
+    // call setScript
+    // if (getScriptRes.length !== 0) {
+    // No need to set height
+    // await setScripts(res[0].privateKeyAgs.lockScript, getScriptRes[0].block_number || 0)
+    // }
+    // else {
+    // setScriptFun(getScript, res[0])
+    // }
+  }
+
+  // const setScriptFun = async (scriptList: ScriptList[], res: WalletListObject) => {
+  //   if (res.type === "create") {
+  //     // create
+  //     const tipHeaderRes = await getTipHeader()
+  //     await setScripts([...scriptList, { script: res.privateKeyAgs.lockScript, block_number: tipHeaderRes.number }])
+  //   } else {
+  //     // import
+  //     await setScripts([...scriptList, { script: res.privateKeyAgs.lockScript, block_number: "0x0" }])
+  //   }
+  // }
 
 
   // isLogin
   useEffect(() => {
+    chrome.storage.sync.get("myScript", function (data) {
+      // myWallet
+      let myScript = data.myScript || {}
+      if (walletList.length === 0) {
+        myScript = {}
+      } else {
+        if (!myScript) {
+          myScript = walletList[0]
+        }
+      }
+      console.log(myScript, "myScript");
 
-  }, [])
+      setScript(myScript)
+    })
+
+  }, [walletList])
+
+  // Public method of wallet change
+  useEffect(() => {
+    if (!wallet) return
+    changeWallet()
+  }, [wallet])
 
   return (
     <div className='Main'>
@@ -60,9 +92,15 @@ export const Main = () => {
         }}>返回</Button>
       </div> */}
       <div className="header">
-        <Dropdown className='addressDropdown' overlay={addressList} placement="bottom">
-          <Button>abc...aaa</Button>
-        </Dropdown>
+        <Select className='addressDropdown' value={script && cutValue(script.privateKeyAgs.address, 8, 8)} key={script && script.privateKeyAgs.address} onChange={handleChange}>
+          {
+            walletList.length !== 0 ? walletList.map((item, index) => {
+              return (
+                <Option key={index} value={item.privateKeyAgs.address}>{cutValue(item.privateKeyAgs.address, 8, 8)}</Option>
+              )
+            }) : null
+          }
+        </Select>
       </div>
       <div className='main_box'>
         <div className='main_info'>

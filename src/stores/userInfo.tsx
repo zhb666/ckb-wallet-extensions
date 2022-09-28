@@ -86,6 +86,22 @@ function useCounter() {
 
     }, [])
 
+    useEffect(() => {
+        chrome.storage.sync.get("myScript", function (data) {
+            // myWallet
+            let myScript = data.myScript || {}
+            if (walletList.length === 0) {
+                myScript = {}
+            } else {
+                if (!myScript) {
+                    myScript = walletList[0]
+                }
+            }
+            setScript(myScript)
+        })
+
+    }, [walletList])
+
     return {
         walletList,
         script,
