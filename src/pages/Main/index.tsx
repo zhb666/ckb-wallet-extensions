@@ -71,8 +71,6 @@ export const Main = () => {
           myScript = walletList[0]
         }
       }
-      console.log(myScript, "myScript");
-
       setScript(myScript)
     })
 

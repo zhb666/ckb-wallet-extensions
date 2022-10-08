@@ -1,0 +1,38 @@
+.Dao{
+    width: 360px;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    img{
+        height: 200px;
+    }
+    h3{
+        font-size: 22px;
+        text-align: center;
+        margin: 30px 0 50px 0;
+    }
+    .createCkb{
+        width: 80%;
+        height: 38px;
+        display: flex;
+        margin: 100px  auto 50px auto;
+        div{
+            border-radius: 10px;
+            color: #fff;
+            line-height: 38px;
+            cursor: pointer;
+            font-size: 12px
+        };
+        .create{
+            flex: 1;
+            background: rgb(0, 204, 155);
+            margin-right: 10px;
+        }
+        .home_import{
+            flex: 1;
+            background: #3c7cf3;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+    }
+}
