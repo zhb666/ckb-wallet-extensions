@@ -6,6 +6,8 @@ import "./inedx.scss"
 import type { ScriptList, WalletListObject } from '~type';
 import { cutValue } from '~utils';
 import { getScripts, getTipHeader, setScripts } from '~rpc';
+import { capacityOf, generateAccountFromPrivateKey } from '~wallet/hd';
+import type { Script } from '@ckb-lumos/lumos';
 
 const { Option } = Select;
 
@@ -17,6 +19,9 @@ export const Main = () => {
 
   const [script, setScript] = useState<WalletListObject>();
   const [wallet, setWallet] = useState<any>();
+  const [fromAddr, setFromAddr] = useState("");
+  const [fromLock, setFromLock] = useState<Script>();
+  const [balance, setBalance] = useState("0");
 
 
   const handleChange = (value: string) => {
@@ -32,31 +37,31 @@ export const Main = () => {
     userStoreHox.userScript(res[0])
     setScript(res[0])
     // First get the previous synchronization height, if it does not start from zero, take it out and pass the value
-    // const getScript = await getScripts();
-    // const getScriptRes = getScript.filter((item: { script: { args: any; }; }) =>
-    //   item.script.args == wallet
-    // )
+    const getScript = await getScripts();
+    const getScriptRes = getScript.filter((item: { script: { args: any; }; }) =>
+      item.script.args == wallet
+    )
 
     // call setScript
-    // if (getScriptRes.length !== 0) {
-    // No need to set height
-    // await setScripts(res[0].privateKeyAgs.lockScript, getScriptRes[0].block_number || 0)
-    // }
-    // else {
-    // setScriptFun(getScript, res[0])
-    // }
+    if (getScriptRes.length !== 0) {
+      // No need to set height
+      // await setScripts(res[0].privateKeyAgs.lockScript, getScriptRes[0].block_number || 0)
+    }
+    else {
+      setScriptFun(getScript, res[0])
+    }
   }
 
-  // const setScriptFun = async (scriptList: ScriptList[], res: WalletListObject) => {
-  //   if (res.type === "create") {
-  //     // create
-  //     const tipHeaderRes = await getTipHeader()
-  //     await setScripts([...scriptList, { script: res.privateKeyAgs.lockScript, block_number: tipHeaderRes.number }])
-  //   } else {
-  //     // import
-  //     await setScripts([...scriptList, { script: res.privateKeyAgs.lockScript, block_number: "0x0" }])
-  //   }
-  // }
+  const setScriptFun = async (scriptList: ScriptList[], res: WalletListObject) => {
+    if (res.type === "create") {
+      // create
+      const tipHeaderRes = await getTipHeader()
+      await setScripts([...scriptList, { script: res.privateKeyAgs.lockScript, block_number: tipHeaderRes.number }])
+    } else {
+      // import
+      await setScripts([...scriptList, { script: res.privateKeyAgs.lockScript, block_number: "0x0" }])
+    }
+  }
 
 
   // isLogin
@@ -82,6 +87,22 @@ export const Main = () => {
     changeWallet()
   }, [wallet])
 
+  const updateFromInfo = async () => {
+    const { lockScript, address } = generateAccountFromPrivateKey(script.privateKey);
+    const capacity = await capacityOf(lockScript);
+
+    setFromAddr(address);
+    setFromLock(lockScript);
+    setBalance(capacity.toString());
+
+  };
+
+  useEffect(() => {
+    if (script && script.privateKey) {
+      updateFromInfo();
+    }
+  }, [script]);
+
   return (
     <div className='Main'>
       {/* <div className='goBack'>
@@ -103,7 +124,7 @@ export const Main = () => {
       <div className='main_box'>
         <div className='main_info'>
           <h5>余额</h5>
-          <p>可用 : 1000000 CKB</p>
+          <p>可用 : {Number(balance) / 100000000} CKB</p>
           <p>质押 : 88800 CKB</p>
           <p>总额 : 10000000 CKB</p>
         </div>
