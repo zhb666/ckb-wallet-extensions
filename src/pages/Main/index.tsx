@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Button, Dropdown, Menu, MenuProps, Space, Select } from "antd"
+import { Button, Select } from "antd"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { userStore } from "../../stores";
 import "./inedx.scss"
 import type { ScriptList, WalletListObject } from '~type';
-import { cutValue } from '~utils';
-import { getScripts, getTipHeader, setScripts } from '~rpc';
-import { capacityOf, generateAccountFromPrivateKey } from '~wallet/hd';
+import { cutValue, formatDate } from '~utils';
+import { getCells, getScripts, getTipHeader, getTransaction, setScripts } from '~rpc';
+import { capacityOf, generateAccountFromPrivateKey } from '~wallet';
 import type { Script } from '@ckb-lumos/lumos';
+import { getUnlockableAmountsFromCells } from '~wallet';
 
 const { Option } = Select;
 
 
 export const Main = () => {
   const userStoreHox = userStore();
-  const { walletList } = userStoreHox
+  const { walletList, daoData } = userStoreHox
   const navigation: NavigateFunction = useNavigate()
 
   const [script, setScript] = useState<WalletListObject>();
@@ -63,6 +64,47 @@ export const Main = () => {
     }
   }
 
+  const updateFromInfo = async () => {
+    const { lockScript, address } = generateAccountFromPrivateKey(script.privateKey);
+    const capacity = await capacityOf(lockScript);
+
+    setFromAddr(address);
+    setFromLock(lockScript);
+    setBalance(capacity.toString());
+
+  };
+
+
+  // get Dao
+  const getDaoData = async () => {
+
+    const cells = await getCells(userStoreHox.script.privateKeyAgs.lockScript)
+    const res = await getUnlockableAmountsFromCells(cells.objects)
+    let DaoBalance = 0
+    let Income = 0
+
+    for (let i = 0; i < res.length; i++) {
+      const transaction = await getTransaction(res[i].txHash);
+      res[i].state = "success"
+      res[i].timestamp = formatDate(parseInt(transaction.header.timestamp))
+      DaoBalance += Number(res[i].amount)
+      Income += Number(res[i].compensation)
+    }
+    userStoreHox.setDaoDataFun({
+      luck: DaoBalance,
+      Income
+    })
+
+    // setTableData(res.reverse());
+  };
+
+
+  useEffect(() => {
+    if (script && script.privateKeyAgs) {
+      getDaoData()
+    }
+  }, [balance])
+
 
   // isLogin
   useEffect(() => {
@@ -87,15 +129,6 @@ export const Main = () => {
     changeWallet()
   }, [wallet])
 
-  const updateFromInfo = async () => {
-    const { lockScript, address } = generateAccountFromPrivateKey(script.privateKey);
-    const capacity = await capacityOf(lockScript);
-
-    setFromAddr(address);
-    setFromLock(lockScript);
-    setBalance(capacity.toString());
-
-  };
 
   useEffect(() => {
     if (script && script.privateKey) {
@@ -124,15 +157,19 @@ export const Main = () => {
       <div className='main_box'>
         <div className='main_info'>
           <h5>余额</h5>
-          <p>可用 : {Number(balance) / 100000000} CKB</p>
-          <p>质押 : 88800 CKB</p>
-          <p>总额 : 10000000 CKB</p>
+          <p>可用 : {Number(balance) / 100000000 - daoData.luck} CKB</p>
+          <p>质押 : {daoData.luck} CKB</p>
+          <p>总额 : {Number(balance) / 100000000} CKB</p>
         </div>
 
       </div>
       <div className='buttons'>
-        <Button className='send' type="primary">发送</Button>
-        <Button className='dao'>质押</Button>
+        <Button className='send' type="primary" onClick={() => {
+          navigation("/send")
+        }}>发送</Button>
+        <Button className='dao' onClick={() => {
+          navigation("/dao")
+        }}>质押</Button>
       </div>
       <div className='transaction'>
         <h5>交易记录</h5>

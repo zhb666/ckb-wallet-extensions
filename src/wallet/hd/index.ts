@@ -1,12 +1,11 @@
-import { RPC_NETWORK } from "../../config";
+import { helpers, Address, Script, hd } from "@ckb-lumos/lumos";
 import {
   mnemonic,
-  ExtendedPrivateKey // Keystore,
+  ExtendedPrivateKey
+  // Keystore,
   // XPubStore
 } from "@ckb-lumos/hd";
-import { helpers, Address, Script, hd, BI } from "@ckb-lumos/lumos";
-import { getCells } from "~rpc";
-import type { ScriptObject } from "~type";
+import { RPC_NETWORK } from "../../config";
 
 // Mnemonic
 export async function Mnemonic() {
@@ -48,18 +47,6 @@ type Account = {
   address: Address;
   pubKey: string;
 };
-
-export async function capacityOf(lockScript: ScriptObject): Promise<BI> {
-  // Convert to bi object
-  let balance = BI.from(0);
-
-  let cells = await getCells(lockScript);
-
-  for await (const cell of cells.objects) {
-    balance = balance.add(cell.cell_output.capacity);
-  }
-  return balance;
-}
 
 export const generateAccountFromPrivateKey = (privKey: string): Account => {
   // Convert to public key

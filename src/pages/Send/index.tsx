@@ -10,6 +10,11 @@ export const Send = () => {
 
   return (
     <div style={{ padding: 16 }} className="Send">
+      <div className='goBack'>
+        <Button onClick={() => {
+          navigation("/")
+        }}>返回</Button>
+      </div>
       <span>Dao page</span>
       <button onClick={onNextPage}>Home</button>
       <Button type="primary">Hello Ant Design</Button>
