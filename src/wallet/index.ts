@@ -1,7 +1,14 @@
 import { getCells } from "../rpc";
 import type { ScriptObject } from "../type";
-import { getUnlockableAmountsFromCells } from "./dao";
+import {
+  deposit,
+  getUnlockableAmountsFromCells,
+  withdrawOrUnlock
+} from "./dao";
 import { generateAccountFromPrivateKey } from "./hd";
+import { sendTransaction } from "./sendTransaction";
+import { signTransaction } from "./signTransaction";
+import { transfer, transactionData } from "./transaction";
 import { BI } from "@ckb-lumos/lumos";
 
 async function capacityOf(lockScript: ScriptObject): Promise<BI> {
@@ -33,8 +40,14 @@ function cellOccupiedBytes(script: ScriptObject) {
 }
 
 export {
+  signTransaction,
+  transfer,
   capacityOf,
+  sendTransaction,
+  transactionData,
+  deposit,
   generateAccountFromPrivateKey,
   getUnlockableAmountsFromCells,
+  withdrawOrUnlock,
   cellOccupiedBytes
 };

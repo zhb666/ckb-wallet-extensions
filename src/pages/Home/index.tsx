@@ -3,7 +3,7 @@ import { Button } from "antd"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { userStore } from "../../stores";
 import { getPeers } from "../../rpc"
-import "./inedx.scss"
+import "./index.scss"
 
 import logo from "data-base64:~assets/img/logo.png"
 

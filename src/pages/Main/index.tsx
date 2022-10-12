@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Button, Select } from "antd"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { userStore } from "../../stores";
-import "./inedx.scss"
 import type { ScriptList, WalletListObject } from '~type';
 import { cutValue, formatDate } from '~utils';
 import { getCells, getScripts, getTipHeader, getTransaction, setScripts } from '~rpc';
 import { capacityOf, generateAccountFromPrivateKey } from '~wallet';
 import type { Script } from '@ckb-lumos/lumos';
 import { getUnlockableAmountsFromCells } from '~wallet';
+import "./index.scss"
 
 const { Option } = Select;
 

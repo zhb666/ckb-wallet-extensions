@@ -2,7 +2,7 @@ import { MemoryRouter } from "react-router-dom"
 import { Routing } from "../pages"
 
 import 'antd/dist/antd.css';
-import "./inedx.scss"
+import "./index.scss"
 
 function IndexPopup() {
   return (
