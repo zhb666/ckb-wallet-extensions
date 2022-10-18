@@ -20,27 +20,27 @@ declare const window: {
 };
 
 const columns: ColumnsType<FinalDataObject> = [
-	{
-		title: 'Date',
-		dataIndex: 'timestamp',
-		key: 'timestamp',
-	},
-	{
-		title: 'Block Height',
-		dataIndex: 'blockHeight',
-		key: 'blockHeight',
-	},
+	// {
+	// 	title: 'Date',
+	// 	dataIndex: 'timestamp',
+	// 	key: 'timestamp',
+	// },
+	// {
+	// 	title: 'Block Height',
+	// 	dataIndex: 'blockHeight',
+	// 	key: 'blockHeight',
+	// },
 	{
 		title: 'Amount',
 		dataIndex: 'amount',
 		key: 'amount',
 	},
 	{
-		title: 'View Transaction',
+		title: 'View',
 		key: 'tx_index',
 		render: (_, record) => (
 			<Space size="middle">
-				<a>{cutValue(record.hash, 10, 10)}</a>
+				<a>{cutValue(record.hash, 3, 5)}</a>
 			</Space>
 		),
 	},

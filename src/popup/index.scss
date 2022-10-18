@@ -1,5 +1,107 @@
 
 .App{
-    width: 360px;
+    width: 400px;
     height: 600px;
+}
+
+h1,h2,h3{
+    color: #00cc9b;
+}
+
+
+html
+{
+	box-sizing: border-box;
+	line-height: 1.3rem;
+	word-break: break-word;
+}
+
+*, *:before, *:after
+{
+	box-sizing: inherit;
+}
+
+h1
+{
+	font-size: 24px;
+	font-weight: 600;
+	margin: 0 0 .4em 0;
+}
+
+h2
+{
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0 0 .3em 0;
+}
+
+h3
+{
+	font-weight: 600;
+}
+
+p
+{
+	margin: 0 0 1em 0;
+}
+ul,li{list-style-type: none;}
+a
+{
+	// color: $color-font-light;
+	font-weight: bold;
+	text-decoration: none;
+
+	&:hover
+	{
+		text-decoration: underline;
+	}
+}
+
+table
+{
+	border-collapse: collapse;
+}
+
+table, tr, td
+{
+	padding: 0;
+	margin: 0;
+}
+
+table, tr, th
+{
+	padding: 0;
+	margin: 0;
+	text-align: left;
+}
+body{
+	color: #000;
+}
+input{
+	color: #000;
+    display: block;
+    padding: 8px;
+    width: 80%;
+}
+
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+
+.ant-progress-circle .ant-progress-text{
+	color: #fff!important;
+}
+.ant-progress-text{
+	font-size: 13px!important;
+}
+// .ant-btn{
+// 	background: #00cc9b!important;
+//     border: #00cc9b 1px solid!important;
+// }
+.ant-radio-wrapper{
+	color: #fff!important;
+	margin-bottom: 10px;
 }

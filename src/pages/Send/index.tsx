@@ -29,6 +29,7 @@ let timer: any = null
 let updateFromInfoTimer: any = null
 export const Send = () => {
   const userStoreHox = userStore();
+  const navigation: NavigateFunction = useNavigate()
 
   const [privKey, setPrivKey] = useState(userStoreHox.script.privateKey);
   const [fromAddr, setFromAddr] = useState("");
@@ -184,10 +185,16 @@ export const Send = () => {
 
   return (
     <Spin spinning={loading}>
+
       <div className='Send'>
+        <div className='goBack'>
+          <Button onClick={() => {
+            navigation("/")
+          }}>返回</Button>
+        </div>
         <h3>Account</h3>
         <ul className='address'>
-          <li>CKB Address : {cutValue(fromAddr, 20, 20)}</li>
+          <li>CKB Address : {cutValue(fromAddr, 10, 10)}</li>
           <li>Total CKB : {Number(balance) / 100000000} </li>
         </ul>
         <h3>Send to Address</h3>
