@@ -32,6 +32,8 @@ export const Main = () => {
   const changeWallet = async () => {
     if (!walletList) return
     // Determine the currently selected wallet
+    console.log(wallet, "wallet");
+
     let res: WalletListObject[] = walletList.filter(item =>
       item.privateKeyAgs.address == wallet
     )
@@ -157,8 +159,8 @@ export const Main = () => {
       <div className='main_box'>
         <div className='main_info'>
           <h5>余额</h5>
-          <p>可用 : {Number(balance) / 100000000 - daoData.luck} CKB</p>
-          <p>质押 : {daoData.luck} CKB</p>
+          <p>可用 : {Number(balance) / 100000000 - daoData.luck / 100000000} CKB</p>
+          <p>质押 : {daoData.luck / 100000000} CKB</p>
           <p>总额 : {Number(balance) / 100000000} CKB</p>
         </div>
 

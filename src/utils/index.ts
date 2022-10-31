@@ -1,5 +1,5 @@
+import type { TransactionObject } from "../type";
 import { BI } from "@ckb-lumos/lumos";
-import { TransactionObject } from "../type";
 
 export async function getCapacity(capacity: string) {
   let balance = BI.from(0);
