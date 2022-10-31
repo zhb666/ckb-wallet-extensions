@@ -10,7 +10,7 @@ import './index.scss';
 import type { DaoDataObject } from '~type';
 import { cutValue, formatDate } from '~utils';
 import { browserUrl } from '~config';
-import { getUnlockableAmountsFromCells } from '~wallet';
+import { getUnlockableAmountsFromCells, withdrawOrUnlock } from '~wallet';
 
 declare const window: {
 	localStorage: {
@@ -38,11 +38,11 @@ const TransactionsTable: React.FC<Props> = ({
 	const [txHash, setTxHash] = useState<string>("");//pending = false  success = true
 
 	const columns: ColumnsType<DaoDataObject> = [
-		{
-			title: 'Date',
-			dataIndex: 'timestamp',
-			key: 'timestamp',
-		},
+		// {
+		// 	title: 'Date',
+		// 	dataIndex: 'timestamp',
+		// 	key: 'timestamp',
+		// },
 		{
 			title: 'Amount',
 			dataIndex: 'amount',
@@ -53,16 +53,16 @@ const TransactionsTable: React.FC<Props> = ({
 				</Space>
 			),
 		},
-		{
-			title: 'Income',
-			dataIndex: 'compensation',
-			key: 'compensation',
-			render: (_, record) => (
-				<Space size="middle">
-					{Number(record.compensation) < 99.9 ? 0 : Number(record.compensation) / 100000000}
-				</Space>
-			),
-		},
+		// {
+		// 	title: 'Income',
+		// 	dataIndex: 'compensation',
+		// 	key: 'compensation',
+		// 	render: (_, record) => (
+		// 		<Space size="middle">
+		// 			{Number(record.compensation) < 99.9 ? 0 : Number(record.compensation) / 100000000}
+		// 		</Space>
+		// 	),
+		// },
 		{
 			title: 'View Transaction',
 			key: 'tx_index',
@@ -74,16 +74,16 @@ const TransactionsTable: React.FC<Props> = ({
 				</Space>
 			),
 		},
-		{
-			title: 'Type',
-			dataIndex: 'type',
-			key: 'type',
-		},
-		{
-			title: 'State',
-			dataIndex: 'state',
-			key: 'state',
-		},
+		// {
+		// 	title: 'Type',
+		// 	dataIndex: 'type',
+		// 	key: 'type',
+		// },
+		// {
+		// 	title: 'State',
+		// 	dataIndex: 'state',
+		// 	key: 'state',
+		// },
 		{
 			title: 'Action',
 			render: (_, record) => (

@@ -168,8 +168,8 @@ export function Dao() {
         </div>
         <h3>Account</h3>
         <ul className='address'>
-          {/* <li>Address : {cutValue(fromAddr, 20, 20)}</li> */}
-          <li>Address : {fromAddr}</li>
+          <li>Address : {cutValue(fromAddr, 20, 20)}</li>
+          {/* <li>Address : {fromAddr}</li> */}
           <li>Total CKB : {Number(balance) / 100000000}</li>
           {/* <li>Available CKB : {minus(Number(balance) / 100000000, userStoreHox.daoData.luck / 100000000)} </li> */}
           <li>Nervos DAO 锁定金额 : {userStoreHox.daoData.luck / 100000000} CKB</li>

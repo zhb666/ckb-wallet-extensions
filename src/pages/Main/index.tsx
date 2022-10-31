@@ -174,7 +174,7 @@ export const Main = () => {
         }}>质押</Button>
       </div>
       <div className='transaction'>
-        <h5>交易记录</h5>
+        {/* <h5>交易记录</h5> */}
       </div>
     </div>
   )
