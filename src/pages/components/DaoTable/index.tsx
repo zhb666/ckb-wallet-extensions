@@ -64,7 +64,7 @@ const TransactionsTable: React.FC<Props> = ({
 		// 	),
 		// },
 		{
-			title: 'View Transaction',
+			title: 'View',
 			key: 'tx_index',
 			render: (_, record) => (
 				<Space size="middle" onClick={() => {
