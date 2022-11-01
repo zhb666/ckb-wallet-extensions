@@ -176,6 +176,14 @@ export const Main = () => {
       <div className='transaction'>
         {/* <h5>交易记录</h5> */}
       </div>
+      <div className="footer">
+        <p onClick={() => {
+          navigation("/create")
+        }}>新建钱包</p>
+        <p className='pr' onClick={() => {
+          navigation("/import")
+        }}>导入钱包</p>
+      </div>
     </div>
   )
 }

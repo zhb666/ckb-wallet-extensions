@@ -64,4 +64,23 @@
             text-align: center;
         }
     }
+    .footer{
+        width: 100%;
+        position: fixed;
+        bottom: 10px;
+        left: 0;
+        p{
+            width: 49%;
+            float: left;
+            text-align: right;
+            cursor: pointer;
+        }
+        .pr{
+            text-align: left;
+            margin-left: 1%;
+        }
+        &>:hover{
+            color: #00cc9b;
+        }
+    }
 }
