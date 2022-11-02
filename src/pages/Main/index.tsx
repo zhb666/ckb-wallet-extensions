@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Select } from "antd"
+import { Button, notification, Select } from "antd"
+import {
+  CopyFilled
+} from '@ant-design/icons';
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { userStore } from "../../stores";
 import type { ScriptList, WalletListObject } from '~type';
@@ -7,6 +10,7 @@ import { cutValue, formatDate } from '~utils';
 import { getCells, getScripts, getTipHeader, getTransaction, setScripts } from '~rpc';
 import { capacityOf, generateAccountFromPrivateKey } from '~wallet';
 import type { Script } from '@ckb-lumos/lumos';
+import copy from 'copy-to-clipboard';
 import { getUnlockableAmountsFromCells } from '~wallet';
 import "./index.scss"
 
@@ -100,6 +104,13 @@ export const Main = () => {
     // setTableData(res.reverse());
   };
 
+  const copyFun = () => {
+    copy(fromAddr);
+    notification["success"]({
+      message: 'Copy success',
+    });
+  }
+
 
   useEffect(() => {
     if (script && script.privateKeyAgs) {
@@ -155,6 +166,7 @@ export const Main = () => {
             }) : null
           }
         </Select>
+        <CopyFilled className='copy' onClick={() => copyFun()} />
       </div>
       <div className='main_box'>
         <div className='main_info'>
