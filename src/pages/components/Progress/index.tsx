@@ -23,7 +23,7 @@ function Progress() {
 
 		let tipHeaderNum = parseInt(tipHeaderRes.number)
 
-		// 没有匹配上钱包需要处理 
+		// No matching wallet needs to be handled
 		if (scriptsFilter && scriptsFilter[0]?.block_number) {
 			let scriptsNum = parseInt(scriptsFilter[0].block_number || 0)
 
@@ -40,7 +40,7 @@ function Progress() {
 
 	useEffect(() => {
 
-		if (!script.privateKey) return
+		if (script && !script.privateKey) return
 
 		setProgress();
 
@@ -56,21 +56,20 @@ function Progress() {
 
 	return (
 		<>
-
 			<ProgressAnd
 				type="circle"
 				strokeColor={{
 					'0%': '#108ee9',
 					'100%': '#87d068',
 				}}
-				width={80}
+				width={50}
 				percent={blockHeight}
 
 			/>
 			<p className='height'>  {scriptsHeight.toLocaleString()} / {tipHeader.toLocaleString()}</p>
-			{
+			{/* {
 				blockHeight >= 100 ? <p>区块数据同步完成...</p> : <p>区块数据同步中...</p>
-			}
+			} */}
 
 		</>
 	)

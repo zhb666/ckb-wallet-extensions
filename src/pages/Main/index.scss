@@ -67,10 +67,16 @@
             text-align: center;
         }
     }
+    .progress{
+        text-align: right;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+    }
     .footer{
         width: 100%;
         position: fixed;
-        bottom: 10px;
+        bottom: 130px;
         left: 0;
         p{
             width: 49%;

@@ -3,6 +3,7 @@ import { Button, notification, Select } from "antd"
 import {
   CopyFilled
 } from '@ant-design/icons';
+import copy from 'copy-to-clipboard';
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { userStore } from "../../stores";
 import type { ScriptList, WalletListObject } from '~type';
@@ -10,9 +11,10 @@ import { cutValue, formatDate } from '~utils';
 import { getCells, getScripts, getTipHeader, getTransaction, setScripts } from '~rpc';
 import { capacityOf, generateAccountFromPrivateKey } from '~wallet';
 import type { Script } from '@ckb-lumos/lumos';
-import copy from 'copy-to-clipboard';
 import { getUnlockableAmountsFromCells } from '~wallet';
+
 import "./index.scss"
+import Progress from '~pages/components/Progress';
 
 const { Option } = Select;
 
@@ -185,9 +187,6 @@ export const Main = () => {
           navigation("/dao")
         }}>质押</Button>
       </div>
-      <div className='transaction'>
-        {/* <h5>交易记录</h5> */}
-      </div>
       <div className="footer">
         <p onClick={() => {
           navigation("/create")
@@ -195,6 +194,9 @@ export const Main = () => {
         <p className='pr' onClick={() => {
           navigation("/import")
         }}>导入钱包</p>
+      </div>
+      <div className='progress'>
+        <Progress />
       </div>
     </div>
   )
