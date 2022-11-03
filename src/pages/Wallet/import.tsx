@@ -26,16 +26,15 @@ export const Import = () => {
             return
         }
         // 1 create 2 importMnemonic 3 importPrivatekey
-        const res: WalletListObject = await getPrivateKeyAgs(mnemonic, 1);
+        const res: WalletListObject = await getPrivateKeyAgs(mnemonic, 2);
         // set add Wallet
         userStoreHox.addWalletList(res)
         // Set up your first account
         // if (walletList && walletList.length == 0) {
         userStoreHox.userScript(res)
 
-        // TODO rpc
-        // const getScript = await getScripts();
-        // setScriptFun(getScript, res)
+        const getScript = await getScripts();
+        setScriptFun(getScript, res)
 
         // tips
         openNotificationWithIcon("success")

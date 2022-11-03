@@ -62,6 +62,7 @@ export const Main = () => {
   }
 
   const setScriptFun = async (scriptList: ScriptList[], res: WalletListObject) => {
+
     if (res.type === "create") {
       // create
       const tipHeaderRes = await getTipHeader()
@@ -141,15 +142,18 @@ export const Main = () => {
   // Public method of wallet change
   useEffect(() => {
     if (!wallet) return
-    changeWallet()
+    changeWallet();
   }, [wallet])
 
 
   useEffect(() => {
+
     if (script && script.privateKey) {
       updateFromInfo();
+      getDaoData();
     }
   }, [script]);
+
 
   return (
     <div className='Main'>
@@ -173,7 +177,7 @@ export const Main = () => {
       <div className='main_box'>
         <div className='main_info'>
           <h5>余额</h5>
-          <p>可用 : {Number(balance) / 100000000 - daoData.luck / 100000000} CKB</p>
+          <p>可用 : {Number(balance) / 100000000 - daoData.luck / 100000000 < 0 ? 0 : Number(balance) / 100000000 - daoData.luck / 100000000} CKB</p>
           <p>质押 : {daoData.luck / 100000000} CKB</p>
           <p>总额 : {Number(balance) / 100000000} CKB</p>
         </div>

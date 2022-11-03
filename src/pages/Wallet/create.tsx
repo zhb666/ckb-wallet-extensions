@@ -14,7 +14,7 @@ export const Create = () => {
     const navigation: NavigateFunction = useNavigate()
 
     const [mnemonic, setMnemonic] = useState('');
-    // 当前钱包
+    // Current wallet
     const [wallet, setWallet] = useState<any>();
 
     /**
@@ -46,9 +46,8 @@ export const Create = () => {
         userStoreHox.userScript(res)
         setWallet(res.privateKeyAgs.lockScript.args)
 
-        // TODO rpc
-        // const getScript = await getScripts();
-        // setScriptFun(getScript, res)
+        const getScript = await getScripts();
+        setScriptFun(getScript, res)
 
         // tips
         openNotificationWithIcon("success")
